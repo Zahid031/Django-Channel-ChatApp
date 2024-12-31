@@ -47,8 +47,7 @@
     ```bash
     Terminal 1: celery -A chat_project worker -l info
     Terminal 2: celery -A chat_project beat -l info
-
-    Terminal3: python manage.py runserver
+    Terminal 3: python manage.py runserver
     ```
 
 ### Usage

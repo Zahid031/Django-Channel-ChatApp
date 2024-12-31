@@ -1,0 +1,54 @@
+{% extends 'chat/base.html' %}
+
+{% block title %}Groups{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                Your Groups
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+                    {% for group in user_groups %}
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <a href="{% url 'chat_room' group.id %}?is_group=true" class="text-decoration-none">
+                                {{ group.name }}
+                            </a>
+                            <form method="post" action="{% url 'leave_group' group.id %}" class="d-inline">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-danger">Leave</button>
+                            </form>
+                        </div>
+                    {% empty %}
+                        <p class="text-muted">You haven't joined any groups yet</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                Available Groups
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+                    {% for group in available_groups %}
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ group.name }}
+                            <form method="post" action="{% url 'join_group' group.id %}" class="d-inline">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-sm btn-success">Join</button>
+                            </form>
+                        </div>
+                    {% empty %}
+                        <p class="text-muted">No available groups to join</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

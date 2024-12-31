@@ -1,0 +1,47 @@
+{% extends 'chat/base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                Direct Messages
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+                    {% for user in conversations %}
+                        <a href="{% url 'chat_room' user.id %}?is_group=false" 
+                           class="list-group-item list-group-item-action">
+                            {{ user.username }}
+                        </a>
+                    {% empty %}
+                        <p class="text-muted">No conversations yet</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                Group Chats
+                <a href="{% url 'create_group' %}" class="btn btn-sm btn-primary">Create Group</a>
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+                    {% for group in groups %}
+                        <a href="{% url 'chat_room' group.id %}?is_group=true" 
+                           class="list-group-item list-group-item-action">
+                            {{ group.name }}
+                        </a>
+                    {% empty %}
+                        <p class="text-muted">No groups yet</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

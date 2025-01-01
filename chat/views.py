@@ -173,14 +173,14 @@ def upload_file(request):
             message = Message.objects.create(
                 sender=request.user,
                 receiver_group=group,
-                file=file
+                file=file,
             )
         else:
             receiver = get_object_or_404(User, id=room_id)
             message = Message.objects.create(
                 sender=request.user,
                 receiver_user=receiver,
-                file=file
+                file=file,
             )
 
         return JsonResponse({'file_url': message.file.url})
